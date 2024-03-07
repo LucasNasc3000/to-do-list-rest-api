@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header('Content-Type: application/json');
+header("Content-Type: application/json");
 
 $connection = new mysqli("localhost", "root", "", "task_list");
 
