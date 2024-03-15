@@ -15,4 +15,6 @@ $task = $_POST["task"];
 $stmt->bind_param("s", $task); 
 
 $stmt->execute();
+
+return json_encode($task);
 ?>
