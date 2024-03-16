@@ -13,7 +13,6 @@ $task = $_POST["task"];
 $urlid = $_POST["urlid"];
 
 $stmt = $connection->query("UPDATE task_list SET task='$task' WHERE idtask='$urlid'");
-
 // Adicionar close()?
 
 ?>
