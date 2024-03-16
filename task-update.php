@@ -12,7 +12,9 @@ if($connection->connect_error) {
 $task = $_POST["task"];
 $urlid = $_POST["urlid"];
 
-$stmt = $connection->query("UPDATE task_list SET task='$task' WHERE idtask='$urlid'");
-// Adicionar close()?
+$stmt = $connection->prepare("UPDATE task_list SET task=? WHERE idtask=?");
 
+$stmt->bind_param("si", $task, $urlid);
+
+$stmt->execute();
 ?>
