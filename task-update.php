@@ -8,12 +8,12 @@ if($connection->connect_error) {
 	echo "Error: " . $connection->connect_error;
 	exit;
 }
-$stmt = $connection->prepare("UPDATE task_list SET task=$task WHERE idtask=$urlid");
 
 $task = $_POST["task"];
 $urlid = $_POST["urlid"];
 
-$stmt->bind_param("ss", $task, $urlid); 
+$stmt = $connection->query("UPDATE task_list SET task='$task' WHERE idtask='$urlid'");
 
-$stmt->execute();
+// Adicionar close()?
+
 ?>
