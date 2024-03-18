@@ -16,5 +16,5 @@ $stmt->bind_param("s", $task);
 
 $stmt->execute();
 
-return json_encode($task);
+echo json_encode($task);
 ?>
