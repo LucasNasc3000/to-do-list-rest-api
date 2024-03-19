@@ -9,18 +9,23 @@ if($connection->connect_error) {
 	exit;
 }
 
-$searchValue = $_POST["searchValue"];
+$param = "%{$_POST["searchValue"]}%";
 
 $stmt = $connection->prepare("SELECT task FROM task_list WHERE task LIKE ?");
 
-$stmt->bind_param("s", $searchValue);
+$stmt->bind_param("s", $param);
 
 $stmt->execute();
 
-$stmt->bind_result($task);
+$result = $stmt->get_result();
 
-while($stmt->fetch()) {
-	echo json_encode($task);
-}
+$data = $result->fetch_all(MYSQLI_ASSOC);
+
+echo json_encode($data);
+
+// $stmt->bind_result($task);
+// while($stmt->fetch()) {
+// 	echo json_encode($task);
+// }
 // $stmt->close();
 ?>
