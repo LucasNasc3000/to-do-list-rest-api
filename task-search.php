@@ -22,9 +22,5 @@ $stmt->bind_result($task);
 while($stmt->fetch()) {
 	echo json_encode($task);
 }
-
-if($task === "") {
-	echo "Tarefa não encontrada";
-}
 // $stmt->close();
 ?>
