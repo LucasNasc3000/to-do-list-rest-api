@@ -41,6 +41,11 @@ switch ($dboperation) {
       $tasks->TaskSearch();
       break;
     }
+    case "finish": {
+      $tasks->setUrlid($urlid);
+      $tasks->setFinished("finished");
+      $tasks->FinishTask();
+    }
 }
 
 ?>

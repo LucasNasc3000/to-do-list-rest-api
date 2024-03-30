@@ -7,7 +7,11 @@ class Task {
     public $task;
 	public $urlid;
 	public $searchValue;
+	public $isfinished = "not-finished";
 
+	public function setFinished($value) {
+       $this->isfinished = $value;
+	}
 	public function setTask($value) {
        $this->task = $value;
 	}
@@ -40,9 +44,9 @@ class Task {
 	}
 
 	public function CreateTask() {
-		$stmt = $this->connection->prepare("INSERT INTO task_list (task) VALUES (?)");
+		$stmt = $this->connection->prepare("INSERT INTO task_list (task, isfinished) VALUES (?, ?)");
 
-        $stmt->bind_param("s", $this->task); 
+        $stmt->bind_param("ss", $this->task, $this->isfinished); 
 
         $stmt->execute();
 
@@ -53,6 +57,14 @@ class Task {
 		$stmt = $this->connection->prepare("UPDATE task_list SET task=? WHERE idtask=?");
 
         $stmt->bind_param("si", $this->task, $this->urlid);
+
+        $stmt->execute();
+	}
+
+	public function FinishTask() {
+		$stmt = $this->connection->prepare("UPDATE task_list SET isfinished=? WHERE idtask=?");
+
+        $stmt->bind_param("si", $this->isfinished, $this->urlid);
 
         $stmt->execute();
 	}
