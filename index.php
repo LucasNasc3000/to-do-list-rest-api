@@ -20,6 +20,12 @@ if(isset($_POST["task"]))$task = $_POST["task"];
 if(isset($_POST["searchValue"]))$searchValue = $_POST["searchValue"];
 if(isset($_POST["urlid"]))$urlid = $_POST["urlid"];
 
+// Verifica se o id enviado na requisição é numérico e se tem mais de 3 dígitos. Estas verificações servem para
+// evitar sql injection.
+if(!is_numeric($urlid) || strlen($urlid) > 3) {
+  exit("Valor inválido para ID");
+}
+
 switch ($dboperation) {
     case "read": {
       $tasks->TaskList();
