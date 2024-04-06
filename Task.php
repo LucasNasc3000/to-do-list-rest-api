@@ -50,7 +50,10 @@ class Task {
 
         $stmt->execute();
 
-        echo json_encode($this->task);
+        echo json_encode(array(
+			$this->task,
+			$this->isfinished
+		));
 	}
 
 	public function UpdateTask() {
@@ -58,7 +61,12 @@ class Task {
 
         $stmt->bind_param("si", $this->task, $this->urlid);
 
-        $stmt->execute();
+        $stmt->execute(); 
+		
+		echo json_encode(array(
+			$this->task,
+			$this->isfinished,
+		));
 	}
 
 	public function FinishTask() {
@@ -67,6 +75,14 @@ class Task {
         $stmt->bind_param("si", $this->isfinished, $this->urlid);
 
         $stmt->execute();
+	}
+
+	public function NotFinished() {
+		   $stmt = $this->connection->prepare("UPDATE task_list SET isfinished=? WHERE idtask=?");
+
+           $stmt->bind_param("si", $this->isfinished, $this->urlid);
+
+		   $stmt->execute();
 	}
 
 	public function TaskSearch() {
