@@ -13,6 +13,7 @@ $tasks = new Task();
 
 
 if(isset($_POST["task"])) $task = $_POST["task"];
+if(isset($_POST["table"])) $table = $_POST["table"];
 if(isset($_POST["searchValue"])) $searchValue = $_POST["searchValue"];
 if(isset($_POST["urlid"])) $urlid = $_POST["urlid"];
 if(isset($_POST["dboperation"])) $dboperation = $_POST["dboperation"];
@@ -20,31 +21,24 @@ if(isset($_POST["dboperation"])) $dboperation = $_POST["dboperation"];
 
 switch ($dboperation) {
     case "read": {
-      $tasks->TaskList();
+      $tasks->TaskList($table);
       break;
     }
     case "create": {
       $tasks->setTask($task);
-      $tasks->CreateTask();
+      $tasks->CreateTask($table);
       break;
     }
     case "update": {
       $tasks->setUrlid($urlid);
       $tasks->setTask($task);
-      $tasks->UpdateTask();
-      $tasks->setFinished("not-finished");
-      $tasks->NotFinished();
+      $tasks->UpdateTask($table);
       break;
     }
     case "search": {
       $tasks->setSearchValue($searchValue);
-      $tasks->TaskSearch();
+      $tasks->TaskSearch($table);
       break;
-    }
-    case "finish": {
-      $tasks->setUrlid($urlid);
-      $tasks->setFinished("finished");
-      $tasks->FinishTask();
     }
 }
 
