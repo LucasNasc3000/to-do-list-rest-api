@@ -11,11 +11,11 @@ require_once("Task.php");
 
 $tasks = new Task();
 
-$dboperation = $_POST["dboperation"];
 
 if(isset($_POST["task"])) $task = $_POST["task"];
 if(isset($_POST["searchValue"])) $searchValue = $_POST["searchValue"];
 if(isset($_POST["urlid"])) $urlid = $_POST["urlid"];
+if(isset($_POST["dboperation"])) $dboperation = $_POST["dboperation"];
 
 
 switch ($dboperation) {
