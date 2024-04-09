@@ -27,7 +27,19 @@ class Task {
         }
 	}
 
+	public function Exists($table, $value) {
+       if(!isset($value) || $value === null) {
+		 return throw new Exception("Task_or_id_needs_to_be_sent_", 500);
+	   } 
+
+       if(!isset($table) || $table === null)  {
+		 return throw new Exception("Table_name_needs_to_be_sent_", 500);
+	   } 
+	}
+
 	public function TaskList($table) {
+        if($this->Exists($table, "default")) return;
+
 		$result = $this->connection->query("SELECT * FROM $table");
 
         $data = array();
@@ -40,6 +52,8 @@ class Task {
 	}
 
 	public function CreateTask($table) {
+        if($this->Exists($table, $this->task)) return;
+
 		$stmt = $this->connection->prepare("INSERT INTO $table (task) VALUES (?)");
 
         $stmt->bind_param("s", $this->task); 
@@ -50,6 +64,8 @@ class Task {
 	}
 
 	public function UpdateTask($table) {
+        if($this->Exists($table, $this->task) || $this->Exists($table, $this->urlid)) return;
+        
 		$stmt = $this->connection->prepare("UPDATE $table SET task=? WHERE idtask=?");
 
         $stmt->bind_param("si", $this->task, $this->urlid);
@@ -60,6 +76,8 @@ class Task {
 	}
 
 	public function TaskSearch($table) {
+        if($this->Exists($table, $this->searchValue)) return;
+
 		$param = "%{$this->searchValue}%";
 
         $stmt = $this->connection->prepare("SELECT task FROM $table WHERE task LIKE ?");
@@ -74,6 +92,16 @@ class Task {
 
         echo json_encode($data);
 	}
+
+	public function Delete($table) {
+        if($this->Exists($table, $this->urlid)) return;
+
+		$stmt = $this->connection->prepare("DELETE FROM $table WHERE idtask=?");
+
+        $stmt->bind_param("i", $this->urlid);
+
+		$stmt->execute();
+	} 
 
 }
 

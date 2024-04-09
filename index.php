@@ -40,6 +40,10 @@ switch ($dboperation) {
       $tasks->TaskSearch($table);
       break;
     }
+    case "delete": {
+      $tasks->setUrlid($urlid);
+      $tasks->Delete($table);
+    }
 }
 
 ?>
