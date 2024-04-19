@@ -80,7 +80,7 @@ class Task {
 
 		$param = "%{$this->searchValue}%";
 
-        $stmt = $this->connection->prepare("SELECT task FROM $table WHERE task LIKE ?");
+        $stmt = $this->connection->prepare("SELECT * FROM $table WHERE task LIKE ?");
 
         $stmt->bind_param("s", $param);
 
